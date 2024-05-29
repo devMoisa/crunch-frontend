@@ -15,6 +15,7 @@ import favicon from './assets/favicon.svg';
 import resetStyles from './styles/reset.css?url';
 import appStyles from './styles/app.css?url';
 import {Layout} from '~/components/Layout';
+import {Button, ChakraProvider} from '@chakra-ui/react';
 
 /**
  * This is important to avoid re-fetching root queries on sub-navigations
@@ -97,7 +98,7 @@ export default function App() {
   const data = useLoaderData<typeof loader>();
 
   return (
-    <html lang="en">
+    <html lang="pt-BR">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -105,6 +106,9 @@ export default function App() {
         <Links />
       </head>
       <body>
+        <div className="bg-red-500 text-white p-4 rounded-lg">
+          Hello, Tailwind CSS!
+        </div>
         <Layout {...data}>
           <Outlet />
         </Layout>
