@@ -33,6 +33,8 @@ export function Layout({
   return (
     <>
       <Navbar />
+      <main>{children}</main>
+      <Footer />
       {/* <CartAside cart={cart} />
       <SearchAside />
       <MobileMenuAside menu={header?.menu} shop={header?.shop} />

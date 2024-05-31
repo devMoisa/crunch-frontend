@@ -106,7 +106,9 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <Layout {...data}>{/* <Outlet /> */}</Layout>
+        <Layout {...data}>
+          <Outlet />
+        </Layout>
         <ScrollRestoration nonce={nonce} />
         <Scripts nonce={nonce} />
       </body>
