@@ -7,6 +7,9 @@ import type {
   RecommendedProductsQuery,
 } from 'storefrontapi.generated';
 import {Carousel} from '~/components/Carousel';
+import {Categories} from '~/components/Categories';
+
+import bgImage from '../assets/bgHeader.webp';
 
 export const meta: MetaFunction = () => {
   return [{title: 'Hydrogen | Home'}];
@@ -24,11 +27,15 @@ export async function loader({context}: LoaderFunctionArgs) {
 export default function Homepage() {
   const data = useLoaderData<typeof loader>();
   return (
-    <div>
+    <>
       <Carousel />
-      {/* <FeaturedCollection collection={data.featuredCollection} />
-      <RecommendedProducts products={data.recommendedProducts} /> */}
-    </div>
+      <div
+        style={{backgroundImage: `url(${bgImage})`}}
+        className="w-full bg-no-repeat bg-cover bg-center min-h-52"
+      >
+        <Categories />
+      </div>
+    </>
   );
 }
 
