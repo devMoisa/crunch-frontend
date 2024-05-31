@@ -5,16 +5,19 @@ import carouselImage from '../assets/banner.png';
 export const Carousel = () => {
   const carouselList = [
     {
-      path: carouselImage,
       linkTop: '/',
+      path: carouselImage,
+      altImage: 'Your new gamming chair!',
     },
     {
-      path: carouselImage,
       linkTop: '/',
+      path: carouselImage,
+      altImage: 'Your new gamming chair!',
     },
     {
-      path: carouselImage,
       linkTop: '/',
+      path: carouselImage,
+      altImage: 'Your new gamming chair!',
     },
   ];
 
@@ -47,9 +50,9 @@ export const Carousel = () => {
         {carouselList.map((item, index) => (
           <img
             key={index}
-            className="w-full h-full object-cover cursor-pointer"
             src={item.path}
-            alt={`Slide ${index}`}
+            alt={item.altImage}
+            className="w-full h-full object-cover cursor-pointer"
           />
         ))}
       </div>
