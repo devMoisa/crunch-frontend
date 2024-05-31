@@ -12,6 +12,10 @@ export const Carousel = () => {
       path: carouselImage,
       linkTop: '/',
     },
+    {
+      path: carouselImage,
+      linkTop: '/',
+    },
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -32,7 +36,7 @@ export const Carousel = () => {
     <div className="w-full h-full relative overflow-hidden">
       <button
         onClick={handlePrev}
-        className="p-4 bg-green-400 rounded-full absolute top-1/2 left-16 z-10 transform -translate-y-1/2 hover:opacity-70 transition"
+        className="p-2 md:p-4 bg-green-400 rounded-full absolute top-1/2 left-4 md:left-16 z-10 transform -translate-y-1/2 hover:opacity-70 transition"
       >
         <IoIosArrowBack size={20} color="#000" />
       </button>
@@ -51,7 +55,7 @@ export const Carousel = () => {
       </div>
       <button
         onClick={handleNext}
-        className="p-4 bg-green-400 rounded-full absolute top-1/2 right-16 transform -translate-y-1/2 hover:opacity-70 transition"
+        className="p-2 md:p-4 bg-green-400 rounded-full absolute top-1/2 right-4 md:right-16 transform -translate-y-1/2 hover:opacity-70 transition"
       >
         <IoIosArrowForward size={20} color="#000" />
       </button>
