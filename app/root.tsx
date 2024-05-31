@@ -106,9 +106,6 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <div className="bg-red-500 text-white p-4 rounded-lg">
-          Hello, Tailwind CSS!
-        </div>
         <Layout {...data}>
           <Outlet />
         </Layout>
