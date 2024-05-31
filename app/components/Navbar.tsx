@@ -29,8 +29,6 @@ export const Navbar = () => {
           <h1 className="text-slate-50 text-xl font-bold">devMoises Store</h1>
         </NavLink>
         <div className="space-x-4 hidden md:flex ">
-          {' '}
-          {/* NESSE AQUI */}
           {links.map((item, index) => (
             <NavLink
               key={index}
