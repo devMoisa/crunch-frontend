@@ -23,12 +23,14 @@ export const Navbar = () => {
   ];
 
   return (
-    <nav className="w-auto bg-custom-gray h-16 flex flex-row justify-center">
+    <nav className="w-auto bg-custom-gray h-16 flex justify-center ">
       <div className="flex w-11/12 max-w-screen-xl flex-row justify-between items-center mx-auto">
         <NavLink to="/">
           <h1 className="text-slate-50 text-xl font-bold">devMoises Store</h1>
         </NavLink>
-        <div className="flex space-x-4">
+        <div className="space-x-4 hidden md:flex ">
+          {' '}
+          {/* NESSE AQUI */}
           {links.map((item, index) => (
             <NavLink
               key={index}
