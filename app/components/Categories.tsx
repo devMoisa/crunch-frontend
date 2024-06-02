@@ -4,6 +4,7 @@ interface ICollection {
   node: {
     id: string;
     title: string;
+    handle: string;
     image: {
       url: string;
     } | null;
@@ -15,13 +16,11 @@ interface IProps {
 }
 
 export const Categories = ({data}: IProps) => {
-  console.log('PROPS', data);
-
   return (
     <div className="w-full flex justify-center pt-10">
       <div className="w-full max-w-screen-xl flex flex-col md:flex-row justify-center items-center gap-4 md:gap-8 px-4 md:px-8">
         {data.map((item) => (
-          <Link to="/" key={item.node.id}>
+          <Link to={`/collections/${item.node.handle}`} key={item.node.id}>
             {item.node.image ? (
               <img
                 alt={item.node.title}

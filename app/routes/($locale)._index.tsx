@@ -7,7 +7,7 @@ import {GET_ALL_CATEGORIES} from '~/graphql/categories/getAllCategories';
 import bgImage from '../assets/bgHeader.webp';
 
 export const meta: MetaFunction = () => {
-  return [{title: 'Hydrogen | Home'}];
+  return [{title: 'Crunch Test | Home'}];
 };
 
 export async function loader({context}: LoaderFunctionArgs) {

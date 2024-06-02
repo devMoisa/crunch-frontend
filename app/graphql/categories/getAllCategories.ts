@@ -5,6 +5,7 @@ query GET_CATEGORIES {
         node {
           id
           title
+          handle
           image {
             url
           }
