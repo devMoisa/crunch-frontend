@@ -1,5 +1,5 @@
-export const GET_ALL_CATEGORIES = `#graphql 
-query GET_CATEGORIES {
+export const GET_HOME_DATA = `#graphql 
+query GET_HOME_DATA {
     collections(first: 4) {
       edges {
         node {
@@ -12,5 +12,23 @@ query GET_CATEGORIES {
         }
       }
     }
+    products(first: 20) {
+    edges {
+      node {
+        id
+        title
+        handle
+        featuredImage{
+            url
+        }
+        priceRange {
+          minVariantPrice {
+            amount
+            currencyCode
+          }
+        }
+      }
+    }
+  }
   }
 `;

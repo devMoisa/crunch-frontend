@@ -16,10 +16,10 @@ export type LayoutProps = {
 
 export function Layout({children = null}: LayoutProps) {
   return (
-    <>
+    <div className="flex-1 h-screen bg-black">
       <Navbar />
-      <main>{children}</main>
+      <main className="flex-1">{children}</main>
       <Footer />
-    </>
+    </div>
   );
 }

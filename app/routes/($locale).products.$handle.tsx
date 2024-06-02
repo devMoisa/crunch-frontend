@@ -27,7 +27,7 @@ import type {
 import {getVariantUrl} from '~/lib/variants';
 
 export const meta: MetaFunction<typeof loader> = ({data}) => {
-  return [{title: `Hydrogen | ${data?.product.title ?? ''}`}];
+  return [{title: `Crunch Test | ${data?.product.title ?? ''}`}];
 };
 
 export async function loader({params, request, context}: LoaderFunctionArgs) {
@@ -104,29 +104,34 @@ export default function Product() {
   const {product, variants} = useLoaderData<typeof loader>();
   const {selectedVariant} = product;
   return (
-    <div className="product">
-      <ProductImage image={selectedVariant?.image} />
+    <div
+      style={{
+        flex: 1,
+      }}
+      className="p-5 bg-black"
+    >
+      <h1>asodiasdjas</h1>
+      {/* <ProductImage image={selectedVariant?.image} />
       <ProductMain
         selectedVariant={selectedVariant}
         product={product}
         variants={variants}
-      />
+      /> */}
     </div>
   );
 }
 
 function ProductImage({image}: {image: ProductVariantFragment['image']}) {
   if (!image) {
-    return <div className="product-image" />;
+    return <div className="product-image bg-gray-200 h-64 w-full" />;
   }
   return (
-    <div className="product-image">
-      <Image
-        alt={image.altText || 'Product Image'}
-        aspectRatio="1/1"
-        data={image}
+    <div className="">
+      <img
         key={image.id}
-        sizes="(min-width: 45em) 50vw, 100vw"
+        src={image.url}
+        className="h-auto w-40 mb-2 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200"
+        alt={image.altText || 'Product Image'}
       />
     </div>
   );
@@ -143,8 +148,8 @@ function ProductMain({
 }) {
   const {title, descriptionHtml} = product;
   return (
-    <div className="product-main">
-      <h1>{title}</h1>
+    <div className="product-main ">
+      <h1 className="text-3xl font-bold mb-4">{title}</h1>
       <ProductPrice selectedVariant={selectedVariant} />
       <br />
       <Suspense
@@ -169,14 +174,11 @@ function ProductMain({
           )}
         </Await>
       </Suspense>
-      <br />
-      <br />
-      <p>
-        <strong>Description</strong>
-      </p>
-      <br />
-      <div dangerouslySetInnerHTML={{__html: descriptionHtml}} />
-      <br />
+      <p className="font-bold mt-5 mb-2">Description</p>
+      <div
+        dangerouslySetInnerHTML={{__html: descriptionHtml}}
+        className="text-gray-700 "
+      />
     </div>
   );
 }
@@ -187,14 +189,14 @@ function ProductPrice({
   selectedVariant: ProductFragment['selectedVariant'];
 }) {
   return (
-    <div className="product-price">
+    <div className="product-price mb-4">
       {selectedVariant?.compareAtPrice ? (
         <>
-          <p>Sale</p>
+          <p className="text-red-500">Sale</p>
           <br />
-          <div className="product-price-on-sale">
+          <div className="product-price-on-sale flex items-baseline space-x-2">
             {selectedVariant ? <Money data={selectedVariant.price} /> : null}
-            <s>
+            <s className="text-gray-500">
               <Money data={selectedVariant.compareAtPrice} />
             </s>
           </div>
@@ -240,6 +242,7 @@ function ProductForm({
               ]
             : []
         }
+        className="bg-blue-500 text-white py-2 px-4 rounded disabled:opacity-50"
       >
         {selectedVariant?.availableForSale ? 'Add to cart' : 'Sold out'}
       </AddToCartButton>
@@ -249,22 +252,20 @@ function ProductForm({
 
 function ProductOptions({option}: {option: VariantOption}) {
   return (
-    <div className="product-options" key={option.name}>
-      <h5>{option.name}</h5>
-      <div className="product-options-grid">
+    <div className="product-options mb-4" key={option.name}>
+      <h5 className="text-lg font-semibold mb-2">{option.name}</h5>
+      <div className="product-options-grid grid grid-cols-3 gap-2">
         {option.values.map(({value, isAvailable, isActive, to}) => {
           return (
             <Link
-              className="product-options-item"
+              className={`product-options-item p-2 border rounded ${
+                isActive ? 'border-black' : 'border-transparent'
+              } ${isAvailable ? 'opacity-100' : 'opacity-30'}`}
               key={option.name + value}
               prefetch="intent"
               preventScrollReset
               replace
               to={to}
-              style={{
-                border: isActive ? '1px solid black' : '1px solid transparent',
-                opacity: isAvailable ? 1 : 0.3,
-              }}
             >
               {value}
             </Link>
@@ -282,12 +283,14 @@ function AddToCartButton({
   disabled,
   lines,
   onClick,
+  className,
 }: {
   analytics?: unknown;
   children: React.ReactNode;
   disabled?: boolean;
   lines: CartLineInput[];
   onClick?: () => void;
+  className?: string;
 }) {
   return (
     <CartForm route="/cart" inputs={{lines}} action={CartForm.ACTIONS.LinesAdd}>
@@ -302,6 +305,7 @@ function AddToCartButton({
             type="submit"
             onClick={onClick}
             disabled={disabled ?? fetcher.state !== 'idle'}
+            className={className}
           >
             {children}
           </button>

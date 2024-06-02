@@ -6,19 +6,19 @@ export const Navbar = () => {
   const links = [
     {
       title: 'Mouse',
-      linkTo: 'Mouse',
+      linkTo: '/collections/Mouse',
     },
     {
       title: 'Keyboards',
-      linkTo: 'Keyboard',
+      linkTo: '/collections/keyboards',
     },
     {
       title: 'Combos',
-      linkTo: 'Combos',
+      linkTo: '/collections/mouse',
     },
     {
-      title: 'Gaming Chair',
-      linkTo: 'Gaming-Chair',
+      title: 'Headsets',
+      linkTo: '/collections/headsets-1',
     },
   ];
 
