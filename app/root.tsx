@@ -1,22 +1,21 @@
-import {useNonce} from '@shopify/hydrogen';
-import {defer, type LoaderFunctionArgs} from '@shopify/remix-oxygen';
 import {
   Links,
   Meta,
   Outlet,
   Scripts,
-  useRouteError,
-  useLoaderData,
   ScrollRestoration,
   isRouteErrorResponse,
+  useLoaderData,
+  useRouteError,
   type ShouldRevalidateFunction,
 } from '@remix-run/react';
-import favicon from './assets/favicon.svg';
-import resetStyles from './styles/reset.css?url';
-import appStyles from './styles/app.css?url';
+import {useNonce} from '@shopify/hydrogen';
+import {defer, type LoaderFunctionArgs} from '@shopify/remix-oxygen';
+import {FaExclamationTriangle} from 'react-icons/fa';
 import {Layout} from '~/components/Layout';
-import {Button, ChakraProvider} from '@chakra-ui/react';
-
+import favicon from './assets/favicon.svg';
+import appStyles from './styles/app.css?url';
+import resetStyles from './styles/reset.css?url';
 /**
  * This is important to avoid re-fetching root queries on sub-navigations
  */
@@ -131,7 +130,7 @@ export function ErrorBoundary() {
   }
 
   return (
-    <html lang="en">
+    <html lang="pt-BR">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -140,11 +139,14 @@ export function ErrorBoundary() {
       </head>
       <body>
         <Layout {...rootData}>
-          <div className="route-error">
-            <h1>Oops</h1>
-            <h2>{errorStatus}</h2>
+          <div
+            className="route-error"
+            style={{textAlign: 'center', marginTop: '50px'}}
+          >
+            <FaExclamationTriangle size={50} color="red" />
+            <h2>Oops, apareceu algum erro</h2>
             {errorMessage && (
-              <fieldset>
+              <fieldset style={{border: 'none', marginTop: '20px'}}>
                 <pre>{errorMessage}</pre>
               </fieldset>
             )}

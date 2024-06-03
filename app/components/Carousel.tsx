@@ -7,17 +7,17 @@ export const Carousel = () => {
     {
       linkTop: '/',
       path: carouselImage,
-      altImage: 'Your new gamming chair!',
+      altImage: 'Your new gaming chair!',
     },
     {
       linkTop: '/',
       path: carouselImage,
-      altImage: 'Your new gamming chair!',
+      altImage: 'Your new gaming chair!',
     },
     {
       linkTop: '/',
       path: carouselImage,
-      altImage: 'Your new gamming chair!',
+      altImage: 'Your new gaming chair!',
     },
   ];
 
@@ -36,29 +36,32 @@ export const Carousel = () => {
   };
 
   return (
-    <div className="w-full h-full relative overflow-hidden">
+    <div className="relative w-full overflow-hidden">
       <button
         onClick={handlePrev}
-        className="p-2 md:p-4 bg-green-400 rounded-full absolute top-1/2 left-4 md:left-16 z-10 transform -translate-y-1/2 hover:opacity-70 transition"
+        className="p-2 md:p-4 bg-green-400 rounded-full absolute top-1/2 left-2 md:left-4 transform -translate-y-1/2 z-10 hover:opacity-70 transition"
       >
         <IoIosArrowBack size={20} color="#000" />
       </button>
       <div
-        className="w-full h-full flex transition-transform duration-700 ease-in-out"
+        className="flex transition-transform duration-700 ease-in-out"
         style={{transform: `translateX(-${currentIndex * 100}%)`}}
       >
         {carouselList.map((item, index) => (
-          <img
-            key={index}
-            src={item.path}
-            alt={item.altImage}
-            className="w-full h-full object-cover cursor-pointer"
-          />
+          <div key={index} className="min-w-full">
+            <div className="aspect-w-16 aspect-h-9">
+              <img
+                src={item.path}
+                alt={item.altImage}
+                className="w-full h-full object-cover"
+              />
+            </div>
+          </div>
         ))}
       </div>
       <button
         onClick={handleNext}
-        className="p-2 md:p-4 bg-green-400 rounded-full absolute top-1/2 right-4 md:right-16 transform -translate-y-1/2 hover:opacity-70 transition"
+        className="p-2 md:p-4 bg-green-400 rounded-full absolute top-1/2 right-2 md:right-4 transform -translate-y-1/2 z-10 hover:opacity-70 transition"
       >
         <IoIosArrowForward size={20} color="#000" />
       </button>

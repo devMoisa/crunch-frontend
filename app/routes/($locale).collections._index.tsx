@@ -42,11 +42,13 @@ function CollectionsGrid({collections}: {collections: CollectionFragment[]}) {
   return (
     <div className="collections-grid">
       {collections.map((collection, index) => (
-        <CollectionItem
-          key={collection.id}
-          collection={collection}
-          index={index}
-        />
+        <>
+          <CollectionItem
+            key={collection.id}
+            collection={collection}
+            index={index}
+          />
+        </>
       ))}
     </div>
   );
