@@ -100,7 +100,7 @@ export const LoginModal: React.FC = () => {
     return (
       <>
         <button
-          className="absolute left-5 top-5 flex items-center text-gray-500 hover:opacity-60 transition"
+          className="absolute  left-5 top-5 flex items-center text-gray-500 hover:opacity-60 transition"
           onClick={handleBackToLogin}
         >
           <IoMdArrowBack size={30} /> Back
@@ -174,7 +174,7 @@ export const LoginModal: React.FC = () => {
     <>
       {loginModalStatus && (
         <div
-          className="fixed z-10 top-0 bg-opacity-90 left-0 w-full flex items-center justify-center min-h-screen bg-gray-800 transition"
+          className="fixed z-20 top-0 bg-opacity-90 left-0 w-full flex items-center justify-center min-h-screen bg-gray-800 transition"
           onClick={handleHideModal}
         >
           <div
