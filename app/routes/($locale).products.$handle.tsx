@@ -1,30 +1,36 @@
-import {Suspense} from 'react';
-import {defer, redirect, type LoaderFunctionArgs} from '@shopify/remix-oxygen';
 import {
   Await,
   Link,
   useLoaderData,
-  type MetaFunction,
   type FetcherWithComponents,
+  type MetaFunction,
 } from '@remix-run/react';
-import type {
-  ProductFragment,
-  ProductVariantsQuery,
-  ProductVariantFragment,
-} from 'storefrontapi.generated';
 import {
-  Image,
+  CartForm,
   Money,
   VariantSelector,
-  type VariantOption,
   getSelectedProductOptions,
-  CartForm,
+  type VariantOption,
 } from '@shopify/hydrogen';
 import type {
   CartLineInput,
   SelectedOption,
 } from '@shopify/hydrogen/storefront-api-types';
+import {defer, redirect, type LoaderFunctionArgs} from '@shopify/remix-oxygen';
+import {Suspense, useState} from 'react';
+import type {
+  ProductFragment,
+  ProductVariantFragment,
+  ProductVariantsQuery,
+} from 'storefrontapi.generated';
 import {getVariantUrl} from '~/lib/variants';
+import bgImage from '../assets/bgHeader.webp';
+import authToken from '~/utils/authToken';
+import {useAuth} from '~/contexts/AuthContext';
+import {toast} from 'react-toastify';
+import {api} from '~/api/api';
+import {IoMdStar} from 'react-icons/io';
+import {MdOutlineStarBorder} from 'react-icons/md';
 
 export const meta: MetaFunction<typeof loader> = ({data}) => {
   return [{title: `Crunch Test | ${data?.product.title ?? ''}`}];
@@ -38,7 +44,6 @@ export async function loader({params, request, context}: LoaderFunctionArgs) {
     throw new Error('Expected product handle to be defined');
   }
 
-  // await the query for the critical product data
   const {product} = await storefront.query(PRODUCT_QUERY, {
     variables: {handle, selectedOptions: getSelectedProductOptions(request)},
   });
@@ -58,18 +63,11 @@ export async function loader({params, request, context}: LoaderFunctionArgs) {
   if (firstVariantIsDefault) {
     product.selectedVariant = firstVariant;
   } else {
-    // if no selected variant was returned from the selected options,
-    // we redirect to the first variant's url with it's selected options applied
     if (!product.selectedVariant) {
       throw redirectToFirstVariant({product, request});
     }
   }
 
-  // In order to show which variants are available in the UI, we need to query
-  // all of them. But there might be a *lot*, so instead separate the variants
-  // into it's own separate query that is deferred. So there's a brief moment
-  // where variant options might show as available when they're not, but after
-  // this deffered query resolves, the UI will update.
   const variants = storefront.query(VARIANTS_QUERY, {
     variables: {handle},
   });
@@ -103,20 +101,31 @@ function redirectToFirstVariant({
 export default function Product() {
   const {product, variants} = useLoaderData<typeof loader>();
   const {selectedVariant} = product;
+
   return (
-    <div
-      style={{
-        flex: 1,
-      }}
-      className="p-5 bg-black"
-    >
-      <h1>asodiasdjas</h1>
-      {/* <ProductImage image={selectedVariant?.image} />
-      <ProductMain
-        selectedVariant={selectedVariant}
-        product={product}
-        variants={variants}
-      /> */}
+    <div className="relative p-5 bg-black text-white flex flex-col items-center">
+      <div
+        style={{
+          backgroundImage: `url(${bgImage})`,
+          opacity: 0.2,
+        }}
+        className="absolute inset-0 bg-no-repeat bg-cover bg-center"
+      ></div>
+      <div className="relative z-10 flex flex-col items-center">
+        <h1 className="text-4xl font-bold text-cente mt-10 mb-16">
+          {product.title}
+        </h1>
+        <div className="flex flex-col lg:flex-row w-1/2 h-full">
+          <ProductImage image={selectedVariant?.image} />
+          <div className="lg:ml-10 flex-1">
+            <ProductMain
+              selectedVariant={selectedVariant}
+              product={product}
+              variants={variants}
+            />
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
@@ -126,11 +135,11 @@ function ProductImage({image}: {image: ProductVariantFragment['image']}) {
     return <div className="product-image bg-gray-200 h-64 w-full" />;
   }
   return (
-    <div className="">
+    <div className="flex justify-center mb-8 lg:mb-0 pt-5 bg-black bg-opacity-70 hover:bg-gray-700 rounded flex-col border-2 border-green-400 border-solid transition cursor-pointer">
       <img
         key={image.id}
         src={image.url}
-        className="h-auto w-40 mb-2 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200"
+        className="h-auto w-full max-w-md rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200"
         alt={image.altText || 'Product Image'}
       />
     </div>
@@ -146,12 +155,33 @@ function ProductMain({
   selectedVariant: ProductFragment['selectedVariant'];
   variants: Promise<ProductVariantsQuery>;
 }) {
-  const {title, descriptionHtml} = product;
+  const {title, descriptionHtml, id} = product;
+  const {checkToken, getDecodedToken} = authToken();
+  const {toggleLoginModalStatus} = useAuth();
+  const [isFavorite, setIsFavorite] = useState(false);
+  const handleIsFavorite = async () => {
+    if (checkToken() === false) {
+      toggleLoginModalStatus(true);
+      toast('Sorry you need to be logged to favorite.');
+      return;
+    }
+
+    try {
+      const userInfo = getDecodedToken();
+      await api.post('/api/favorite', {
+        name: title,
+        idShopify: id,
+        userId: userInfo?.id,
+      });
+
+      toast.success('Product saved.');
+      setIsFavorite(!isFavorite);
+    } catch (error) {}
+  };
+
   return (
-    <div className="product-main ">
-      <h1 className="text-3xl font-bold mb-4">{title}</h1>
+    <div className="product-main">
       <ProductPrice selectedVariant={selectedVariant} />
-      <br />
       <Suspense
         fallback={
           <ProductForm
@@ -177,8 +207,20 @@ function ProductMain({
       <p className="font-bold mt-5 mb-2">Description</p>
       <div
         dangerouslySetInnerHTML={{__html: descriptionHtml}}
-        className="text-gray-700 "
+        className="text-gray-300"
       />
+      <button
+        onClick={handleIsFavorite}
+        className="mt-5 w-full bg-transparent text-orange-400 p-5 border-2 border-orange-400 border-solid cursor-pointer flex items-center justify-center hover:opacity-50 transition
+      "
+      >
+        <span className="mr-2">Add to Favorite</span>
+        {isFavorite ? (
+          <IoMdStar size={35} color="orange" />
+        ) : (
+          <MdOutlineStarBorder size={35} color="orange" />
+        )}
+      </button>
     </div>
   );
 }

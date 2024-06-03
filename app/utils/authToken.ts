@@ -1,5 +1,13 @@
 import {jwtDecode} from 'jwt-decode';
 
+interface IUserData {
+  exp: number;
+  iat: number;
+  id: string;
+  userEmail: string;
+  userName: string;
+}
+
 const saveToken = (token: string): void => {
   localStorage.setItem('authToken', token);
 };
@@ -30,7 +38,7 @@ const checkToken = (): boolean => {
   return false;
 };
 
-const getDecodedToken = (): object | null => {
+const getDecodedToken = (): IUserData | null => {
   const token = getToken();
   if (!token) {
     return null;

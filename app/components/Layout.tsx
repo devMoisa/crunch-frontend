@@ -18,9 +18,11 @@ export type LayoutProps = {
 export function Layout({children = null}: LayoutProps) {
   return (
     <AuthProvider>
-      <div className="flex-1 h-screen bg-black">
+      <div className="grid grid-rows-layout min-h-screen bg-black text-white">
         <Navbar />
-        <main className="flex-1">{children}</main>
+        <main className="row-start-2 row-end-3 bg-black flex-1">
+          {children}
+        </main>
         <Footer />
       </div>
     </AuthProvider>

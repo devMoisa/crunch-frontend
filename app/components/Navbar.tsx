@@ -1,10 +1,10 @@
 import {NavLink} from '@remix-run/react';
-import {useLayoutEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
+import {FaDoorOpen} from 'react-icons/fa';
 import {useAuth} from '~/contexts/AuthContext';
 import profileIcon from '../assets/profile.png';
 import authToken from '../utils/authToken';
 import {LoginModal} from './LoginModal';
-import {FaDoorOpen} from 'react-icons/fa';
 
 export const Navbar = () => {
   const {checkToken, removeToken} = authToken();
@@ -40,14 +40,14 @@ export const Navbar = () => {
     window.location.reload(); // Its temporary
   };
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const tokenStatus = checkToken();
     setIsLoggedUser(tokenStatus);
   }, []);
 
   return (
     <>
-      <nav className="w-auto bg-custom-gray h-20 flex justify-center ">
+      <nav className="row-start-1 row-end-2 w-auto bg-custom-gray h-20 flex justify-center ">
         <div className="flex w-11/12 max-w-screen-xl flex-row justify-between items-center mx-auto">
           <NavLink to="/">
             <h1 className="text-green-500 text-xl font-bold">
@@ -68,14 +68,14 @@ export const Navbar = () => {
           <div className="flex space-x-4 items-center">
             {isLoggedUser ? (
               <>
-                <button className="flex" onClick={handleUserLogin}>
+                <NavLink className="text-center" to={'/favorites'}>
                   <h5 className="text-white">
                     You're logged{' '}
                     <span className="text-blue-500 flex">
                       (Go to favorites)
                     </span>
                   </h5>
-                </button>
+                </NavLink>
                 <div className="h-10 w-0.5 bg-white "></div>
                 <button
                   onClick={handleLogoutUser}
