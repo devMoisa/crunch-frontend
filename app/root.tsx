@@ -11,12 +11,11 @@ import {
 } from '@remix-run/react';
 import {useNonce} from '@shopify/hydrogen';
 import {defer, type LoaderFunctionArgs} from '@shopify/remix-oxygen';
+import {FaExclamationTriangle} from 'react-icons/fa';
 import {Layout} from '~/components/Layout';
 import favicon from './assets/favicon.svg';
 import appStyles from './styles/app.css?url';
 import resetStyles from './styles/reset.css?url';
-import {FaExclamationTriangle} from 'react-icons/fa';
-
 /**
  * This is important to avoid re-fetching root queries on sub-navigations
  */

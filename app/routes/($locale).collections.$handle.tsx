@@ -5,6 +5,7 @@ import {Product} from '~/components/Product';
 import {COLLECTION_QUERY} from '~/graphql/products/ProductItemFragmentQuery';
 import wallbg from '../assets/bgHeader.webp';
 import bannerHeader from '../assets/categories.jpg';
+import {AuthProvider} from '~/contexts/AuthContext';
 
 export const meta: MetaFunction<typeof loader> = ({data}) => {
   return [{title: `Crunch Test | ${data?.collection.title ?? ''} Collection`}];

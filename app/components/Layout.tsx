@@ -5,6 +5,7 @@ import type {
 } from 'storefrontapi.generated';
 import {Footer} from '~/components/Footer';
 import {Navbar} from './Navbar';
+import {AuthProvider} from '~/contexts/AuthContext';
 
 export type LayoutProps = {
   cart: Promise<CartApiQueryFragment | null>;
@@ -16,10 +17,12 @@ export type LayoutProps = {
 
 export function Layout({children = null}: LayoutProps) {
   return (
-    <div className="flex-1 h-screen bg-black">
-      <Navbar />
-      <main className="flex-1">{children}</main>
-      <Footer />
-    </div>
+    <AuthProvider>
+      <div className="flex-1 h-screen bg-black">
+        <Navbar />
+        <main className="flex-1">{children}</main>
+        <Footer />
+      </div>
+    </AuthProvider>
   );
 }

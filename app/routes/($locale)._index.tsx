@@ -7,6 +7,8 @@ import {GET_HOME_DATA} from '~/graphql/categories/getAllCategories';
 import bgImage from '../assets/bgHeader.webp';
 import {Product} from '~/components/Product';
 import {productsMapper} from '~/utils/productsMapper';
+import {LoginModal} from '~/components/LoginModal';
+import {AuthProvider} from '~/contexts/AuthContext';
 
 export const meta: MetaFunction = () => {
   return [{title: 'Crunch Test | Home'}];
@@ -26,8 +28,6 @@ export default function Homepage() {
 
   const allCategories = data.getHomeInformations.collections.edges;
   const allProducts = productsMapper(data.getHomeInformations.products.edges);
-
-  console.log(allProducts);
 
   return (
     <>
