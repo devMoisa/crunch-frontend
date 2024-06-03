@@ -279,7 +279,7 @@ export const LoginModal: React.FC = () => {
                 <h2 className="text-center font-bold text-lime-600 mt-10 mb-2">
                   {dynamicForm === FormType.Login ? 'Login' : 'Register'}
                 </h2>
-                <h2 className="text-2xl font-bold text-center mb-8 mt-2">
+                <h2 className="text-2xl font-bold text-center text-black mb-8 mt-2">
                   devMoises's Store
                 </h2>
                 {dynamicForm === 'login' ? <BoxLogin /> : <BoxUserRegister />}
