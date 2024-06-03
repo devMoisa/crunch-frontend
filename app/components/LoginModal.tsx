@@ -16,7 +16,7 @@ export const LoginModal: React.FC = () => {
   const {loginModalStatus, toggleLoginModalStatus} = useAuth();
   const [dynamicForm, setDynamicForm] = useState<FormType>(FormType.Login);
   const [loadingForm, setLoadingForm] = useState(false);
-  const {saveToken, removeToken, checkToken} = authToken();
+  const {saveToken} = authToken();
 
   const handleHideModal = (e: React.MouseEvent) => {
     if (e.target === e.currentTarget) {
@@ -44,6 +44,8 @@ export const LoginModal: React.FC = () => {
 
         if (response.status === 200) {
           const {access_token} = response.data;
+          toggleLoginModalStatus(false);
+          window.location.reload(); // TODO: It's TEMPORARY SWITCH TO CONTEXT AFTER
 
           saveToken(access_token);
           toast.success('Success!', {
@@ -51,6 +53,12 @@ export const LoginModal: React.FC = () => {
           });
         }
       } catch (error: any) {
+        if (error.response.status === 400) {
+          toast.error('Sorry you need to fill the inputs.', {
+            position: 'top-right',
+          });
+        }
+
         toast.error(error?.response.data.message, {
           position: 'top-right',
         });
@@ -128,9 +136,23 @@ export const LoginModal: React.FC = () => {
 
         if (response.status === 201) {
           toggleLoginModalStatus(false);
-          toast.success('Success!', {
-            position: 'top-right',
+
+          // TODO: IT's TEMPORARY NEEDS TO CHANGE INTO API TO RETURN JWT TOKEN WHEN USER BE CREATED
+          const loginUser = await api.post('/api/auth/login', {
+            email,
+            password,
           });
+
+          if (loginUser.status === 200) {
+            const {access_token} = loginUser.data;
+            toggleLoginModalStatus(false);
+            window.location.reload(); // TODO: It's TEMPORARY SWITCH TO CONTEXT AFTER (To trigger in Navbar)
+
+            saveToken(access_token);
+            toast.success('Success!', {
+              position: 'top-right',
+            });
+          }
         }
       } catch (error: any) {
         toast.error(error?.response.data.message, {

@@ -30,8 +30,22 @@ const checkToken = (): boolean => {
   return false;
 };
 
+const getDecodedToken = (): object | null => {
+  const token = getToken();
+  if (!token) {
+    return null;
+  }
+
+  try {
+    return jwtDecode(token);
+  } catch (error) {
+    console.error('Erro ao decodificar o token:', error);
+    return null;
+  }
+};
+
 const authToken = () => {
-  return {saveToken, getToken, removeToken, checkToken};
+  return {saveToken, getToken, removeToken, checkToken, getDecodedToken};
 };
 
 export default authToken;
