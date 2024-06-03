@@ -1,46 +1,47 @@
-# Hydrogen template: Skeleton
+# Crunch Frontend
 
-Hydrogen is Shopify’s stack for headless commerce. Hydrogen is designed to dovetail with [Remix](https://remix.run/), Shopify’s full stack web framework. This template contains a **minimal setup** of components, queries and tooling to get started with Hydrogen.
+Welcome to the devMoises's Frontend test project! This project is a React-based frontend application built with Shopify Hydrogen and other modern web development tools.
 
-[Check out Hydrogen docs](https://shopify.dev/custom-storefronts/hydrogen)
-[Get familiar with Remix](https://remix.run/docs/en/v1)
+## Patch Notes:
 
-## What's included
+- Login modal
+- Login authentication (using JWT expires in 2 min)
+- User Register modal
+- User Register request
+- Modal with Global Context (Disclaimer, I've been started with REDUX but hydrogen have some error and I changed to useContext to manage the global states)
+- All Aplication usign TailwindCSS
 
-- Remix
-- Hydrogen
-- Oxygen
-- Vite
-- Shopify CLI
-- ESLint
-- Prettier
-- GraphQL generator
-- TypeScript and JavaScript flavors
-- Minimal setup of components and routes
+## Project Structure
 
-## Getting started
+- **app/**: Contains the source code of the application.
 
-**Requirements:**
+## Prerequisites
 
-- Node.js version 18.0.0 or higher
+- Node.js >= 20.12.0
+- npm or yarn >= 10.5.0
 
-```bash
-npm create @shopify/hydrogen@latest
-```
+## Installation
 
-## Building for production
+Clone the repository and install the dependencies:
 
 ```bash
-npm run build
+git clone git@github.com:devMoisa/crunch-frontend.git
+cd crunch-frontend
+npm install
 ```
 
-## Local development
+## Scripts
 
-```bash
-npm run dev
-```
+- **dev**: Starts the development server.
 
-## Setup for using Customer Account API (`/account` section)
+  ```bash
+  npm run dev
+  ```
 
-Follow step 1 and 2 of <https://shopify.dev/docs/custom-storefronts/building-with-the-customer-account-api/hydrogen#step-1-set-up-a-public-domain-for-local-development>
-# crunch-frontend
+## License
+
+This project is licensed under the MIT License.
+
+## Contributing
+
+Feel free to open issues or submit pull requests for any improvements or bug fixes. Your contributions are welcome!
